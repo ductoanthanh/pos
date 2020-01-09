@@ -27,6 +27,16 @@ io.on("connection", socket => {
     });
   });
 
+  // Placing the order
+  socket.on("putOrder", order => {
+    collection_foodItems
+      .update({ _id: order._id }, { $inc: { ordQty: order.order } })
+      .then(updatedDoc => {
+        // Emitting event to update the Kitchen opened across the devices with the realtime order values
+        io.sockets.emit("change_data");
+      });
+  });
+
   // disconnect is fired when a client leaves the server
   socket.on("disconnect", () => {
     console.log("user disconnected");
