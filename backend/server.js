@@ -37,6 +37,29 @@ io.on("connection", socket => {
       });
   });
 
+  // Order completion
+  socket.on("mark_done", id => {
+    collection_foodItems
+      .update({ _id: id }, { $inc: { ordQty: -1, prodQty: 1 } })
+      .then(updatedDoc => {
+        // Updating the different Kitchen area with the current Status.
+        io.sockets.emit("change_data");
+      });
+  });
+
+  // Functionality to change the predicted quantity value
+  socket.on("ChangePred", predicted_data => {
+    collection_foodItems
+      .update(
+        { _id: predicted_data._id },
+        { $set: { predQty: predicted_data.predQty } }
+      )
+      .then(updatedDoc => {
+        // Socket event to update the Predicted quantity across the Kitchen
+        io.sockets.emit("change_data");
+      });
+  });
+
   // disconnect is fired when a client leaves the server
   socket.on("disconnect", () => {
     console.log("user disconnected");
