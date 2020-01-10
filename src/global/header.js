@@ -5,7 +5,7 @@ import "./header.css";
 
 // The Header creates links that can be used to navigate
 // between routes.
-var socket;
+let socket;
 class Header extends Component {
   constructor() {
     super();
@@ -28,6 +28,12 @@ class Header extends Component {
             </li>
             <li>
               <NavLink to="/kitchen"> Kitchen </NavLink>
+            </li>
+            <li>
+              <NavLink to="/kitchen-new"> Kitchen New</NavLink>
+            </li>
+            <li>
+              <NavLink to="/counter"> Counter</NavLink>
             </li>
           </ul>
         </nav>

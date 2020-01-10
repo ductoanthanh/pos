@@ -6,6 +6,8 @@ import { Switch, Route } from "react-router-dom";
 import PlaceOrder from "./main/PlaceOrder";
 import UpdatePredicted from "./main/UpdatePredicted";
 import Kitchen from "./main/Kitchen";
+import OrderListing from "./components/order/order-listing/OrderListing";
+import Counter from "./components/counter/Counter";
 
 class App extends Component {
   render() {
@@ -14,8 +16,10 @@ class App extends Component {
         <Header />
         <Switch>
           <Route exact path="/" component={PlaceOrder} />
-          <Route path="/updatepredicted" component={UpdatePredicted} />  
+          <Route path="/updatepredicted" component={UpdatePredicted} />
+          <Route path="/kitchen-new" component={OrderListing} />
           <Route path="/kitchen" component={Kitchen} />
+          <Route path="/counter" component={Counter} />
         </Switch>
       </div>
     );
