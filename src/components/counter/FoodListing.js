@@ -31,8 +31,14 @@ class FoodListing extends Component {
   render() {
     return (
       <Container>
-        <h2 className="h2Class">Counter</h2>
-        <FoodList foods={this.state.foodData} />
+        <div>
+          <h2 className="h2Class">Counter</h2>
+          <FoodList
+            cart={this.props.cart}
+            modifyCart={this.props.modifyCart}
+            foods={this.state.foodData}
+          />
+        </div>
       </Container>
     );
   }

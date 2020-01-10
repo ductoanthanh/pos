@@ -23,17 +23,11 @@ class Header extends Component {
           <ul className="NavClass">
             <li>
               <NavLink exact to="/">
-                Place Order
+                Counter
               </NavLink>
             </li>
             <li>
-              <NavLink to="/kitchen"> Kitchen </NavLink>
-            </li>
-            <li>
-              <NavLink to="/kitchen-new"> Kitchen New</NavLink>
-            </li>
-            <li>
-              <NavLink to="/counter"> Counter</NavLink>
+              <NavLink to="/kitchen"> Kitchen</NavLink>
             </li>
           </ul>
         </nav>
