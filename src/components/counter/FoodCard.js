@@ -1,16 +1,19 @@
 import React, { Component } from "react";
-import { socket } from "../../global/header";
 
 class FoodCard extends Component {
   constructor() {
     super();
-    this.state = {
-      isDone: false
-    };
+    this.state = {};
   }
 
-  addToCart = () => {
-    socket.emit("add_order");
+  addToCart = food => {
+    let id = food._id;
+    let currentCart = { ...this.props.cart };
+    currentCart[id] = {
+      quantity: currentCart[id] ? currentCart[id].quantity + 1 : 1,
+      name: food.name
+    };
+    this.props.modifyCart(currentCart);
   };
 
   render() {
@@ -26,9 +29,7 @@ class FoodCard extends Component {
           <div className="card-block">
             <h4 className="card-title">{food.name}</h4>
             <p className="card-text">{food._id}</p>
-            <button onClick={() => this.addToCart(food._id)}>
-              Add to Cart
-            </button>
+            <button onClick={() => this.addToCart(food)}>Add to Cart</button>
           </div>
         </div>
       </div>
