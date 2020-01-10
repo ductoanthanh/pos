@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 // our server instance
 const server = http.createServer(app);
 
-// This creates our socket using the instance of the server
+// This creates socket using the instance of the server
 const io = socketIO(server);
 
 io.on("connection", socket => {
@@ -32,26 +32,6 @@ io.on("connection", socket => {
     collection_foodItems.find({}).then(docs => {
       io.sockets.emit("get_data", docs);
     });
-  });
-
-  // Placing the order
-  socket.on("putOrder", order => {
-    collection_foodItems
-      .update({ _id: order._id }, { $inc: { ordQty: order.order } })
-      .then(updatedDoc => {
-        // Emitting event to update the Kitchen opened across the devices with the realtime order values
-        io.sockets.emit("change_data");
-      });
-  });
-
-  // Order completion
-  socket.on("mark_done", id => {
-    collection_foodItems
-      .update({ _id: id }, { $inc: { ordQty: -1, prodQty: 1 } })
-      .then(updatedDoc => {
-        // Updating the different Kitchen area with the current Status.
-        io.sockets.emit("change_data");
-      });
   });
 
   // Functionality to change the predicted quantity value
@@ -77,32 +57,21 @@ io.on("connection", socket => {
   // Returning the initial data of orders from Orders collection
   socket.on("get_foods", () => {
     Food.find().then(docs => {
-      console.log(docs);
       io.sockets.emit("get_food_data", docs);
     });
   });
 
   // Returning the initial data of orders from Orders collection
-  socket.on("add_order", () => {
-    const req = {
-      body: {
-        title: "Giang Toan",
-        guests: 12,
-        totalPrice: 224,
-        foods: [
-          {
-            _id: "5e173f55354629d7e6fad7f1",
-            quantity: 1,
-            additionalInfo: "More beef"
-          }
-        ]
-      }
-    };
-    const { title, totalPrice, guests, foods } = req.body;
+  socket.on("add_order", request => {
+    const { title, totalPrice, guests, foods } = request;
 
     const order = new Order({ title, totalPrice, guests, foods });
 
     Order.create(order, (err, newOrder) => {
+      if (err) {
+        console.log(err);
+      }
+
       foods.forEach(food => {
         Food.findById(food._id)
           .populate("orders")
@@ -120,7 +89,7 @@ io.on("connection", socket => {
     });
   });
 
-  // Order completion !!NEW
+  // Order completion
   socket.on("mark_order_done", id => {
     collection_orders
       .update({ _id: id }, { $set: { isDone: true } })
