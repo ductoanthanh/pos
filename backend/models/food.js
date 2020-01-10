@@ -6,7 +6,8 @@ const foodSchema = new Schema({
   category: { type: String, lowercase: true },
   price: Number,
   description: { type: String },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
 });
 
 module.exports = mongoose.model('Food', foodSchema);
