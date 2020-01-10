@@ -2,6 +2,9 @@ const express = require("express");
 const http = require("http");
 const socketIO = require("socket.io");
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const foodRoutes = require('./routes/foods');
+const orderRoutes = require('./routes/orders');
 require('dotenv').config();
 
 const db = require("monk")(process.env.DB_URL);
@@ -65,6 +68,16 @@ io.on("connection", socket => {
     console.log("user disconnected");
   });
 });
+
+// connect database for endpoints
+mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true }).then((db, err) => {
+  if (db) {
+    console.log('connected');
+  }
+});
+
+app.use('/api/v1/foods', foodRoutes);
+app.use('/api/v1/orders', orderRoutes);
 
 const port = process.env.PORT || 3001;
 
