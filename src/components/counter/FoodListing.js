@@ -33,11 +33,7 @@ class FoodListing extends Component {
       <Container>
         <div>
           <h2 className="h2Class">Counter</h2>
-          <FoodList
-            cart={this.props.cart}
-            modifyCart={this.props.modifyCart}
-            foods={this.state.foodData}
-          />
+          <FoodList foods={this.state.foodData} />
         </div>
       </Container>
     );
