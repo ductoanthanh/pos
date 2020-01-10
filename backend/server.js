@@ -1,18 +1,22 @@
 const express = require("express");
 const http = require("http");
 const socketIO = require("socket.io");
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const foodRoutes = require('./routes/foods');
-const orderRoutes = require('./routes/orders');
-require('dotenv').config();
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const foodRoutes = require("./routes/foods");
+const orderRoutes = require("./routes/orders");
+require("dotenv").config();
 
 const db = require("monk")(process.env.DB_URL);
 
+const Order = require("./models/order");
+const Food = require("./models/food");
+
 const collection_foodItems = db.get("FoodItems"); // collection on MongoDB
+const collection_orders = db.get("orders"); // collection on MongoDB
 
 const app = express();
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 // our server instance
 const server = http.createServer(app);
@@ -63,6 +67,69 @@ io.on("connection", socket => {
       });
   });
 
+  // Returning the initial data of orders from Orders collection
+  socket.on("get_orders", () => {
+    Order.find({ isDone: false }).then(docs => {
+      io.sockets.emit("get_order_data", docs);
+    });
+  });
+
+  // Returning the initial data of orders from Orders collection
+  socket.on("get_foods", () => {
+    Food.find().then(docs => {
+      console.log(docs);
+      io.sockets.emit("get_food_data", docs);
+    });
+  });
+
+  // Returning the initial data of orders from Orders collection
+  socket.on("add_order", () => {
+    const req = {
+      body: {
+        title: "Giang Toan",
+        guests: 12,
+        totalPrice: 224,
+        foods: [
+          {
+            _id: "5e173f55354629d7e6fad7f1",
+            quantity: 1,
+            additionalInfo: "More beef"
+          }
+        ]
+      }
+    };
+    const { title, totalPrice, guests, foods } = req.body;
+
+    const order = new Order({ title, totalPrice, guests, foods });
+
+    Order.create(order, (err, newOrder) => {
+      foods.forEach(food => {
+        Food.findById(food._id)
+          .populate("orders")
+          .exec((err, foundFood) => {
+            if (err) {
+              console.log(err);
+            }
+
+            foundFood.orders.push(newOrder._id);
+            foundFood.save();
+          });
+      });
+
+      io.sockets.emit("change_data");
+    });
+  });
+
+  // Order completion !!NEW
+  socket.on("mark_order_done", id => {
+    collection_orders
+      .update({ _id: id }, { $set: { isDone: true } })
+      .then(updatedDoc => {
+        // Updating the different Kitchen area with the current Status.
+        io.sockets.emit("change_order_data");
+      });
+  });
+
   // disconnect is fired when a client leaves the server
   socket.on("disconnect", () => {
     console.log("user disconnected");
@@ -70,14 +137,19 @@ io.on("connection", socket => {
 });
 
 // connect database for endpoints
-mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true }).then((db, err) => {
-  if (db) {
-    console.log('connected');
-  }
-});
+mongoose
+  .connect(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then((db, err) => {
+    if (db) {
+      console.log("connected");
+    }
+  });
 
-app.use('/api/v1/foods', foodRoutes);
-app.use('/api/v1/orders', orderRoutes);
+app.use("/api/v1/foods", foodRoutes);
+app.use("/api/v1/orders", orderRoutes);
 
 const port = process.env.PORT || 3001;
 
