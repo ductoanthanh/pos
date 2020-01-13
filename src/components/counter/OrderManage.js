@@ -7,15 +7,15 @@ export const OrderManage = () => {
   return (
     <div className="order-manage__container">
       <div>
-        <div class="tab">
+        <div className="tab manage-tab">
           <button
-            class={`tablinks ${isOpenOrdersTab ? "active" : ""}`}
+            className={`tablinks ${isOpenOrdersTab ? "active" : ""}`}
             onClick={() => setOpenOrdersTab(true)}
           >
             Open orders
           </button>
           <button
-            class={`tablinks ${isOpenOrdersTab ? "" : "active"}`}
+            className={`tablinks ${isOpenOrdersTab ? "" : "active"}`}
             onClick={() => setOpenOrdersTab(false)}
           >
             Today History

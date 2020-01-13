@@ -1,7 +1,7 @@
 import React from "react";
 import { VibamiConsumer } from "../../context/context";
 
-export const FoodCard = props => {
+export const ItemCard = props => {
   return (
     <VibamiConsumer>
       {value => {
