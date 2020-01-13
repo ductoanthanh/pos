@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Container } from "reactstrap";
 import { OrderList } from "./OrderList";
 import { socket } from "../../../global/header";
 
@@ -30,10 +29,10 @@ class OrderListing extends Component {
 
   render() {
     return (
-      <Container>
+      <div>
         <h2 className="h2Class">Kitchen Order Area</h2>
         <OrderList orders={this.state.orderData} />
-      </Container>
+      </div>
     );
   }
 }
