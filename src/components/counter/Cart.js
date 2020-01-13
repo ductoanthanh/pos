@@ -41,7 +41,9 @@ export const Cart = () => {
                 {cart[key]["quantity"]}x {cart[key]["name"]}
               </p>
             ))}
-            <button onClick={() => addToKitchen(cart)}>Submit Order</button>
+            <button className="primary-btn" onClick={() => addToKitchen(cart)}>
+              Submit Order
+            </button>
           </div>
         );
       }}
