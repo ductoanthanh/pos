@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Container } from "reactstrap";
 import { FoodList } from "./FoodList";
 import { socket } from "../../global/header";
 
@@ -30,12 +29,9 @@ class FoodListing extends Component {
 
   render() {
     return (
-      <Container>
-        <div>
-          <h2 className="h2Class">Counter</h2>
-          <FoodList foods={this.state.foodData} />
-        </div>
-      </Container>
+      <div>
+        <FoodList foods={this.state.foodData} />
+      </div>
     );
   }
 }
