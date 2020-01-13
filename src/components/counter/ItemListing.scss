@@ -1,0 +1,25 @@
+.time-tab {
+  .tablinks {
+    width: 25%;
+
+    &.active {
+      border: 0;
+      border-bottom: 3px solid #009de0;
+      background-color: transparent;
+    }
+  }
+}
+
+.category-tab {
+  background-color: #dfe3e8;
+
+  .tablinks {
+    width: 25%;
+
+    &.active {
+      background-color: #000;
+      color: #fff;
+      border-radius: 8px;
+    }
+  }
+}

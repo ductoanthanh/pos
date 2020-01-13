@@ -21,3 +21,13 @@
   padding: 0.2rem 1rem;
   border-radius: 8px;
 }
+
+.tab {
+  display: flex;
+  margin-bottom: 16px;
+  border-radius: 8px;
+
+  .tablinks {
+    text-align: center;
+  }
+}

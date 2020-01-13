@@ -1,3 +1,17 @@
 .order-manage__container {
   padding: 16px;
 }
+
+.manage-tab {
+  background-color: #dfe3e8;
+
+  .tablinks {
+    width: 50%;
+
+    &.active {
+      background-color: #000;
+      color: #fff;
+      border-radius: 8px;
+    }
+  }
+}

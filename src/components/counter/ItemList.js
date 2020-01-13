@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { FoodCard } from "./FoodCard";
+import { ItemCard } from "./ItemCard";
 
-export class FoodList extends Component {
+export class ItemList extends Component {
   renderFoods() {
     return this.props.foods.map((food, index) => {
-      return <FoodCard key={index} colNum="col-md-3 col-xs-6" food={food} />;
+      return <ItemCard key={index} colNum="col-md-3 col-xs-6" food={food} />;
     });
   }
 

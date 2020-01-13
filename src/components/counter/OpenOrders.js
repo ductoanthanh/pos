@@ -9,7 +9,7 @@ export const OpenOrders = () => {
         <p className="margin0">
           No. of orders: <strong>15</strong>
         </p>
-        <button class="primary-btn">New order</button>
+        <button className="primary-btn">New order</button>
       </div>
       <div className="order-manage__card">
         <div className="order-manage__card-header">
