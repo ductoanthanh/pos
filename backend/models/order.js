@@ -6,7 +6,14 @@ const orderSchema = new Schema({
   totalPrice: Number,
   guests: Number,
   createdAt: { type: Date, default: Date.now },
-  foods: [{ type: Schema.Types.ObjectId, ref: "Food" }],
+  foods: [
+    {
+      itemInfo: { type: Schema.Types.ObjectId, ref: "Food" },
+      //variant: { type: Schema.Types.ObjectId, ref: "Variant" },
+      quantity: Number,
+      additionalInfo: String
+    }
+  ],
   isDone: { type: Boolean, default: false },
   paid: { type: Boolean, default: false }
 });

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Cart } from "./Cart";
+import { Order } from "./Order";
 import "./OpenOrders.scss";
 import { socket } from "../../global/header";
 
@@ -7,12 +8,14 @@ export class OpenOrders extends Component {
   constructor() {
     super();
     this.state = {
-      orderData: [] // connect to sockets,
+      orders: [], // connect to sockets,
+      isOrderOpen: false,
+      selectedOrder: {}
     };
   }
 
   getOrdersData = orders => {
-    this.setState({ orderData: orders });
+    this.setState({ orders: orders });
   };
 
   changeData = () => socket.emit("get_orders");
@@ -29,18 +32,34 @@ export class OpenOrders extends Component {
   }
 
   render() {
+    console.log(this.state.orders);
     return (
       <div>
         <div className="order-manage__heading">
           <p className="margin0">
-            No. of orders: <strong>{this.state.orderData.length}</strong>
+            No. of orders: <strong>{this.state.orders.length}</strong>
           </p>
           <button className="primary-btn">New order</button>
         </div>
-        {this.state.orderData.map((order, index) => {
-          console.log(order.foods);
+        {/* render all open orders */
+        this.state.orders.map((order, index) => {
+          let foodQty = 0;
+          const totalQty = order.foods.reduce((accumulator, currentValue) => {
+            if (
+              ["main", "appertizer"].includes(currentValue.itemInfo.category)
+            ) {
+              foodQty += currentValue.quantity; // food & appertizer quantity
+            }
+            return accumulator + currentValue.quantity;
+          }, 0); // all items quantity
           return (
-            <div key={index} className="order-manage__card">
+            <div
+              key={index}
+              className="order-manage__card"
+              onClick={() =>
+                this.setState({ isOrderOpen: true, selectedOrder: order })
+              }
+            >
               <div className="order-manage__card-header">
                 <h5 className="margin0">{order.title}</h5>
                 <span>${order.totalPrice}</span>
@@ -67,28 +86,19 @@ export class OpenOrders extends Component {
               </div>
               <p className="margin0">
                 Dishes:&nbsp;
-                <strong>
-                  {
-                    order.foods.filter(food =>
-                      ["main", "appertizer"].includes(food.category)
-                    ).length
-                  }
-                  &nbsp;items
-                </strong>
+                <strong>{foodQty} &nbsp;items</strong>
                 <br />
                 Drinks &amp; desserts:&nbsp;
-                <strong>
-                  {
-                    order.foods.filter(food =>
-                      ["drink", "dessert"].includes(food.category)
-                    ).length
-                  }
-                  &nbsp;items
-                </strong>
+                <strong>{totalQty - foodQty} &nbsp;items</strong>
               </p>
             </div>
           );
         })}
+        {this.state.isOrderOpen ? (
+          <Order order={this.state.selectedOrder} />
+        ) : (
+          ""
+        )}
         <Cart />
       </div>
     );
