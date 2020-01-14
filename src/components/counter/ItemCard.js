@@ -1,7 +1,8 @@
 import React from "react";
 import { VibamiConsumer } from "../../context/context";
+import "./ItemCard.scss";
 
-export const FoodCard = props => {
+export const ItemCard = props => {
   return (
     <VibamiConsumer>
       {value => {

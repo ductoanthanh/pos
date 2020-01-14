@@ -4,6 +4,8 @@ export const VibamiContext = createContext();
 
 export const VibamiProvider = props => {
   const [cart, setCart] = useState({});
+  const [sideView, setSideView] = useState("orders-manage");
+  const [selectedOrder, setSelectedOrder] = useState({});
 
   const modifyCart = cart => {
     setCart({ ...cart });
@@ -13,7 +15,11 @@ export const VibamiProvider = props => {
     <VibamiContext.Provider
       value={{
         cart,
-        modifyCart
+        modifyCart,
+        sideView,
+        setSideView,
+        selectedOrder,
+        setSelectedOrder
       }}
     >
       {props.children}
