@@ -15,7 +15,7 @@ const orderSchema = new Schema({
     }
   ],
   isDone: { type: Boolean, default: false },
-  paid: { type: Boolean, default: false }
+  isPaid: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model("Order", orderSchema);

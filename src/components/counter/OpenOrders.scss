@@ -15,12 +15,11 @@
     display: flex;
     justify-content: space-between;
     font-weight: bold;
-    margin-bottom: 8px;
   }
 
   &-status {
     &-list {
-      margin-bottom: 8px;
+      margin: 8px 0;
       span {
         border-radius: 8px;
         margin-right: 5px;
