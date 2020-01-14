@@ -20,9 +20,7 @@ app.use(bodyParser.json());
 
 // our server instance
 const server = http.createServer(app);
-
-// This creates socket using the instance of the server
-const io = socketIO(server);
+const io = socketIO(server); // instances of io
 
 io.on("connection", socket => {
   console.log("New client connected" + socket.id);
@@ -49,9 +47,11 @@ io.on("connection", socket => {
 
   // Returning the initial data of orders from Orders collection
   socket.on("get_orders", () => {
-    Order.find({ isDone: false }).then(docs => {
-      io.sockets.emit("get_order_data", docs);
-    });
+    Order.find({ isDone: false })
+      .populate("foods.itemInfo")
+      .then(docs => {
+        io.sockets.emit("get_order_data", docs);
+      });
   });
 
   // Returning the initial data of orders from Orders collection
@@ -73,7 +73,7 @@ io.on("connection", socket => {
       }
 
       foods.forEach(food => {
-        Food.findById(food._id)
+        Food.findById(food.itemInfo)
           .populate("orders")
           .exec((err, foundFood) => {
             if (err) {
