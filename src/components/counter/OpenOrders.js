@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Cart } from "./Cart";
 import "./OpenOrders.scss";
 
@@ -22,7 +22,7 @@ export const OpenOrders = () => {
         </div>
         <p className="margin0">
           Dishes: <strong>4 items</strong> <br />
-          Drinks & desserts: <strong>5 items</strong>
+          Drinks &amp; desserts: <strong>5 items</strong>
         </p>
       </div>
       <div className="order-manage__card">
