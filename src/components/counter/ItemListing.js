@@ -67,7 +67,11 @@ class ItemListing extends Component {
             );
           })}
         </div>
-        <ItemList foods={this.state.foodData} />
+        <ItemList
+          foods={this.state.foodData.filter(
+            item => item.category === this.state.category // render item within certain category
+          )}
+        />
       </div>
     );
   }

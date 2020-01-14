@@ -1,5 +1,6 @@
 import React from "react";
 import { VibamiConsumer } from "../../context/context";
+import "./ItemCard.scss";
 
 export const ItemCard = props => {
   return (
