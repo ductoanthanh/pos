@@ -48,7 +48,7 @@ io.on("connection", socket => {
   // Returning the initial data of orders from Orders collection
   socket.on("get_orders", () => {
     Order.find({ isDone: false })
-      .populate("foods")
+      .populate("foods.itemInfo")
       .then(docs => {
         io.sockets.emit("get_order_data", docs);
       });
@@ -73,7 +73,7 @@ io.on("connection", socket => {
       }
 
       foods.forEach(food => {
-        Food.findById(food._id)
+        Food.findById(food.itemInfo)
           .populate("orders")
           .exec((err, foundFood) => {
             if (err) {
@@ -91,7 +91,6 @@ io.on("connection", socket => {
 
   // Order completion
   socket.on("mark_order_done", id => {
-    console.log("mark done");
     collection_orders
       .update({ _id: id }, { $set: { isDone: true } })
       .then(updatedDoc => {

@@ -14,7 +14,7 @@ export const Cart = () => {
           // reconstruct cart object to array
           for (let [id, food] of Object.entries(cart)) {
             let lineItem = {};
-            lineItem["_id"] = id;
+            lineItem["itemInfo"] = id;
             lineItem["quantity"] = food.quantity;
             lineItems.push(lineItem);
           }
