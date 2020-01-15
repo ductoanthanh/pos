@@ -7,7 +7,7 @@ const foodSchema = new Schema({
   price: Number,
   description: { type: String },
   createdAt: { type: Date, default: Date.now },
-  // variants: [{ type: Schema.Types.ObjectId, ref: "Variant" }],
+  variants: [{ type: Schema.Types.ObjectId, ref: "Variant" }],
   orders: [{ type: Schema.Types.ObjectId, ref: "Order" }]
 });
 
