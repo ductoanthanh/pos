@@ -9,7 +9,7 @@ export const ItemModal = props => {
   const [quantity, setQuantity] = useState(1);
   const onSubmit = data => {
     console.log(data);
-    addToCart(food);
+    addToCart(food, data);
     setQuantity(1); // reset quantity to 1
     toggle(); // if submit successfully then close modal
   };
@@ -17,7 +17,7 @@ export const ItemModal = props => {
     <Modal isOpen={isOpen} toggle={toggle} className="">
       {/* "handleSubmit" will validate inputs before invoking "onSubmit" */}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+        <ModalHeader toggle={toggle}>{food.name}</ModalHeader>
         <ModalBody>
           <label>Fillings</label>
           <ul>
@@ -28,14 +28,19 @@ export const ItemModal = props => {
                   <li key={index}>
                     <input
                       type="radio"
-                      value={variant._id}
+                      value={JSON.stringify(variant)}
                       name="fillings"
                       id={variant._id}
                       checked={fillings === index}
                       onChange={() => setFillings(index)}
                       ref={register}
                     />
-                    <label className="override-label">{variant.title}</label>
+                    <label
+                      className="override-label"
+                      onClick={() => setFillings(index)}
+                    >
+                      {variant.title}
+                    </label>
                   </li>
                 );
               })}
@@ -43,7 +48,11 @@ export const ItemModal = props => {
 
           <div>
             <label>Additional Info</label>
-            <input name="additionInfo" defaultValue="test" ref={register} />
+            <input
+              name="additionalInfo"
+              placeholder="No pepper"
+              ref={register}
+            />
           </div>
 
           <div>

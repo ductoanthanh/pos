@@ -15,12 +15,18 @@ export const ItemCard = props => {
         const { cart, modifyCart } = value;
         const food = props.food;
 
-        const addToCart = food => {
-          let id = food._id;
+        const addToCart = (food, data) => {
+          const fillings = JSON.parse(data.fillings);
+          let id = `${food._id}-${fillings._id}`;
           let currentCart = { ...cart };
           currentCart[id] = {
-            quantity: currentCart[id] ? currentCart[id].quantity + 1 : 1,
-            name: food.name
+            quantity: currentCart[id]
+              ? parseInt(currentCart[id].quantity) + parseInt(data.quantity)
+              : parseInt(data.quantity),
+            name: food.name,
+            fillings: fillings.title,
+            additionalInfo: data.additionalInfo,
+            basePrice: parseInt(food.price) + parseInt(fillings.addOnPrice)
           };
           modifyCart(currentCart);
         };
@@ -37,7 +43,6 @@ export const ItemCard = props => {
                 <div className="card-block">
                   <h4 className="card-title">{food.name}</h4>
                   <p className="card-text">{food._id}</p>
-                  <button onClick={() => addToCart(food)}>Add to Cart</button>
                 </div>
               </div>
             </div>

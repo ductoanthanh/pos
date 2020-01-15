@@ -9,8 +9,9 @@ const orderSchema = new Schema({
   foods: [
     {
       itemInfo: { type: Schema.Types.ObjectId, ref: "Food" },
-      //variant: { type: Schema.Types.ObjectId, ref: "Variant" },
+      variant: { type: Schema.Types.ObjectId, ref: "Variant" },
       quantity: Number,
+      price: Number,
       additionalInfo: String
     }
   ],
