@@ -5,53 +5,68 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 export const ItemModal = props => {
   const { isOpen, toggle, addToCart, food } = props;
   const { register, handleSubmit, errors } = useForm();
-  console.log(food);
+  const [fillings, setFillings] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const onSubmit = data => {
-    addToCart(food);
     console.log(data);
+    addToCart(food);
+    setQuantity(1); // reset quantity to 1
+    toggle(); // if submit successfully then close modal
   };
   return (
     <Modal isOpen={isOpen} toggle={toggle} className="">
+      {/* "handleSubmit" will validate inputs before invoking "onSubmit" */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <ModalBody>
-          {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
-
           <label>Fillings</label>
           <ul>
-            <li>
-              <input
-                type="radio"
-                value="e-bill"
-                name="billing_method"
-                id="billing_method-1"
-              />
-              <label className="override-label">E-lasku</label>
-            </li>
-            <li>
-              <input
-                type="radio"
-                value="paper-bill"
-                name="billing_method"
-                id="billing_method-2"
-              />
-              <label className="override-label">Paperilasku</label>
-            </li>
+            {/* register your input into the hook by invoking the "register" function */}
+            {food.variants.length > 0 &&
+              food.variants.map((variant, index) => {
+                return (
+                  <li key={index}>
+                    <input
+                      type="radio"
+                      value={variant._id}
+                      name="fillings"
+                      id={variant._id}
+                      checked={fillings === index}
+                      onChange={() => setFillings(index)}
+                      ref={register}
+                    />
+                    <label className="override-label">{variant.title}</label>
+                  </li>
+                );
+              })}
           </ul>
 
-          {/* register your input into the hook by invoking the "register" function */}
           <div>
-            <label>Special Instructions</label>
-            <input name="instructions" defaultValue="test" ref={register} />
+            <label>Additional Info</label>
+            <input name="additionInfo" defaultValue="test" ref={register} />
           </div>
 
           <div>
             <label>Quantity</label>
-            <input name="exampleRequired" ref={register} />
+            <input
+              type="number"
+              name="quantity"
+              value={quantity}
+              ref={register({ min: 1 })}
+              readOnly
+            />
+            {/* errors will return when field validation fails  */}
+            {errors.quantity && <span>Minimum number is 1</span>}
+            <Button color="primary" onClick={() => setQuantity(quantity + 1)}>
+              +
+            </Button>
+            <Button color="danger" onClick={() => setQuantity(quantity - 1)}>
+              -
+            </Button>
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>
+          <Button color="primary">
             <input type="submit" value="Add To Order" />
           </Button>
           <Button color="secondary" onClick={toggle}>
