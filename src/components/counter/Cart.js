@@ -14,15 +14,21 @@ export const Cart = () => {
           // reconstruct cart object to array
           for (let [id, food] of Object.entries(cart)) {
             let lineItem = {};
-            lineItem["itemInfo"] = id;
+            lineItem["itemInfo"] = id.match(/^[^-]*[^ -]/)[0]; // get everything before -
             lineItem["quantity"] = food.quantity;
+            lineItem["variant"] = id.match(/\w[^-]*$/)[0]; // get everything after -
+            lineItem["price"] =
+              parseInt(food.basePrice) * parseInt(food.quantity);
             lineItems.push(lineItem);
           }
 
           const request = {
             title: "Giang Toan",
             guests: 12,
-            totalPrice: 224,
+            totalPrice: lineItems.reduce(
+              (accumulator, item) => accumulator + item.price,
+              0
+            ),
             foods: lineItems
           };
 
@@ -37,9 +43,15 @@ export const Cart = () => {
           <div>
             <h2 className="h2Class">Cart</h2>
             {Object.keys(cart).map(key => (
-              <p key={key}>
-                {cart[key]["quantity"]}x {cart[key]["name"]}
-              </p>
+              <div className="row-container" key={key}>
+                <p>
+                  {cart[key]["quantity"]}x {cart[key]["name"]} -&nbsp;
+                  {cart[key]["fillings"]}
+                  <br />
+                  {cart[key]["additionalInfo"]}
+                </p>
+                <p>${cart[key]["basePrice"] * cart[key]["quantity"]}</p>
+              </div>
             ))}
             <button className="primary-btn" onClick={() => addToKitchen(cart)}>
               Submit Order
