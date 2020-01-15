@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const foodRoutes = require("./routes/foods");
 const orderRoutes = require("./routes/orders");
+const variantRoutes = require("./routes/variants");
 require("dotenv").config();
 
 const db = require("monk")(process.env.DB_URL);
@@ -56,9 +57,11 @@ io.on("connection", socket => {
 
   // Returning the initial data of orders from Orders collection
   socket.on("get_foods", () => {
-    Food.find().then(docs => {
-      io.sockets.emit("get_food_data", docs);
-    });
+    Food.find()
+      .populate("variants")
+      .then(docs => {
+        io.sockets.emit("get_food_data", docs);
+      });
   });
 
   // Returning the initial data of orders from Orders collection
@@ -119,6 +122,7 @@ mongoose
 
 app.use("/api/v1/foods", foodRoutes);
 app.use("/api/v1/orders", orderRoutes);
+app.use("/api/v1/variants", variantRoutes);
 
 const port = process.env.PORT || 3001;
 
