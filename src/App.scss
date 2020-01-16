@@ -66,3 +66,23 @@ ul {
   transition: box-shadow 300ms ease-in-out;
   padding: 8px;
 }
+
+.item-modal {
+  label {
+    margin-right: 10px;
+    min-width: 120px;
+  }
+  .fillings {
+    input[type="radio"] {
+      margin: 0 8px;
+    }
+  }
+
+  input[type="number"] {
+    width: 30px;
+  }
+
+  .btn {
+    margin: 0 3px;
+  }
+}
