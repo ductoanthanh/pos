@@ -14,13 +14,13 @@ export const ItemModal = props => {
     toggle(); // if submit successfully then close modal
   };
   return (
-    <Modal isOpen={isOpen} toggle={toggle} className="">
+    <Modal isOpen={isOpen} toggle={toggle} className="item-modal">
       {/* "handleSubmit" will validate inputs before invoking "onSubmit" */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <ModalHeader toggle={toggle}>{food.name}</ModalHeader>
         <ModalBody>
           <label>Fillings</label>
-          <ul>
+          <ul className="fillings">
             {/* register your input into the hook by invoking the "register" function */}
             {food.variants.length > 0 &&
               food.variants.map((variant, index) => {
