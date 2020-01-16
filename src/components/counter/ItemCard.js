@@ -37,12 +37,12 @@ export const ItemCard = props => {
         return (
           <div>
             <div className={props.colNum} onClick={toggle}>
+              <img
+                className="card-img-top"
+                src="https://d2vwsr3mua7yp8.cloudfront.net/aa1bcb8f-90c1-4ea1-9ff0-039be063b587_d3.jpg" // needs to be changed
+                alt={food.name}
+              ></img>
               <div className="card">
-                <img
-                  className="card-img-top"
-                  src="https://d2vwsr3mua7yp8.cloudfront.net/aa1bcb8f-90c1-4ea1-9ff0-039be063b587_d3.jpg" // needs to be changed
-                  alt={food.name}
-                ></img>
                 <div className="card-block">
                   <h4 className="card-title">{food.name}</h4>
                   <p className="card-text">{food._id}</p>

@@ -47,7 +47,12 @@ export class OpenOrders extends Component {
                 <p className="margin0">
                   No. of orders: <strong>{this.state.orders.length}</strong>
                 </p>
-                <button className="primary-btn">New order</button>
+                <button
+                  className="primary-btn"
+                  onClick={() => setSideView("cart")}
+                >
+                  New order
+                </button>
               </div>
               {/* render all open orders */
               this.state.orders.map((order, index) => {

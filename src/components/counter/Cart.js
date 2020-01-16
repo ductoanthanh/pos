@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 import { socket } from "../../global/header";
 import { VibamiConsumer } from "../../context/context";
 
@@ -19,6 +20,7 @@ export const Cart = () => {
             lineItem["variant"] = id.match(/\w[^-]*$/)[0]; // get everything after -
             lineItem["price"] =
               parseInt(food.basePrice) * parseInt(food.quantity);
+            lineItem["additionalInfo"] = food.additionalInfo;
             lineItems.push(lineItem);
           }
 
@@ -45,6 +47,9 @@ export const Cart = () => {
         return (
           <div>
             <h2 className="h2Class">Cart</h2>
+            <p style={{ display: _.isEmpty(cart) ? "block" : "none" }}>
+              Please select item from the left
+            </p>
             {Object.keys(cart).map(key => (
               <div className="row-container" key={key}>
                 <p>
