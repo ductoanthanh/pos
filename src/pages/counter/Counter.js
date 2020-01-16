@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ItemListing from "../../components/counter/ItemListing";
 import { OrderManage } from "../../components/counter/OrderManage";
 import { Order } from "../../components/counter/Order";
+import { Cart } from "../../components/counter/Cart";
 import { VibamiConsumer } from "../../context/context";
 import "./Counter.scss";
 
@@ -19,6 +20,7 @@ export const Counter = () => {
             <div className="ticket-container">
               {sideView === "orders-manage" ? <OrderManage /> : ""}
               {sideView === "order-manage" ? <Order /> : ""}
+              {sideView === "cart" ? <Cart /> : ""}
             </div>
           </div>
         );

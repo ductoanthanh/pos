@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { Cart } from "./Cart";
-import { Order } from "./Order";
 import { OrderStatus } from "./OrderStatus";
 import "./OpenOrders.scss";
 import { socket } from "../../global/header";
@@ -88,7 +86,6 @@ export class OpenOrders extends Component {
                   </div>
                 );
               })}
-              <Cart />
             </div>
           );
         }}

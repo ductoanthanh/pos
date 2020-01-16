@@ -12,7 +12,7 @@ export const ItemCard = props => {
   return (
     <VibamiConsumer>
       {value => {
-        const { cart, modifyCart } = value;
+        const { cart, modifyCart, sideView, setSideView } = value;
         const food = props.food;
 
         const addToCart = (food, data) => {
@@ -29,12 +29,15 @@ export const ItemCard = props => {
             basePrice: parseInt(food.price) + parseInt(fillings.addOnPrice)
           };
           modifyCart(currentCart);
+          if (sideView !== "cart") {
+            setSideView("cart");
+          }
         };
 
         return (
           <div>
             <div className={props.colNum} onClick={toggle}>
-              <div className="card bwm-card">
+              <div className="card">
                 <img
                   className="card-img-top"
                   src="https://d2vwsr3mua7yp8.cloudfront.net/aa1bcb8f-90c1-4ea1-9ff0-039be063b587_d3.jpg" // needs to be changed

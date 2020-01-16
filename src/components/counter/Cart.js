@@ -6,7 +6,7 @@ export const Cart = () => {
   return (
     <VibamiConsumer>
       {value => {
-        const { cart, modifyCart } = value;
+        const { cart, modifyCart, setSideView } = value;
 
         const addToKitchen = cart => {
           const lineItems = [];
@@ -37,6 +37,9 @@ export const Cart = () => {
 
           // empty cart
           modifyCart({});
+
+          // set side view back to all orders
+          setSideView("orders-manage");
         };
 
         return (
@@ -53,8 +56,24 @@ export const Cart = () => {
                 <p>${cart[key]["basePrice"] * cart[key]["quantity"]}</p>
               </div>
             ))}
-            <button className="primary-btn" onClick={() => addToKitchen(cart)}>
-              Submit Order
+            <hr />
+            <div className="row-container">
+              {console.log(cart)}
+              <p>Total</p>
+              <p>
+                $
+                {Object.values(cart).reduce(
+                  (accumulator, object) =>
+                    accumulator + object.basePrice * object.quantity,
+                  0
+                )}
+              </p>
+            </div>
+            <button
+              className="primary-btn full-btn"
+              onClick={() => addToKitchen(cart)}
+            >
+              Send orders
             </button>
           </div>
         );
