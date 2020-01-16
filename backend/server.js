@@ -50,6 +50,7 @@ io.on("connection", socket => {
   socket.on("get_orders", () => {
     Order.find({ isDone: false })
       .populate("foods.itemInfo")
+      .populate("foods.variant")
       .then(docs => {
         io.sockets.emit("get_order_data", docs);
       });
