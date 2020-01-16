@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { socket } from "../../../global/header";
+import { Timer } from "./Timer";
+import SwipeButton from "../../../global/SwipeButton";
 
 class OrderCard extends Component {
   constructor() {
@@ -21,18 +23,28 @@ class OrderCard extends Component {
         className={this.props.colNum}
         style={{ display: this.state.isDone ? "none" : "block" }}
       >
+        <Timer createdAt={order.createdAt} />
         <div className="card">
           <div className="card-block">
             <h4 className="card-title">{order.title}</h4>
-            <p className="card-text">{order._id}</p>
+            <p></p>
             <p className="card-text">Guests: {order.guests}</p>
-            <p className="card-text">€{order.totalPrice}</p>
             {order.foods.map((food, index) => {
-              return <p key={index}>{food._id}</p>;
+              return (
+                <p key={index}>
+                  {food.quantity}x {food.itemInfo.name} {food.variant.title}
+                  <br />
+                  <span style={{ color: "#C4CDD5" }}>
+                    {food.additionalInfo}
+                  </span>
+                </p>
+              );
             })}
-            <button onClick={() => this.markDone(order._id)}>
-              Mark as done
-            </button>
+            <SwipeButton
+              text="Food Ready"
+              color="#009de0"
+              onSuccess={() => this.markDone(order._id)}
+            />
           </div>
         </div>
       </div>
