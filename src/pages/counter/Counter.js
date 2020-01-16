@@ -14,10 +14,10 @@ export const Counter = () => {
         console.log(sideView);
         return (
           <div className="counter-container">
-            <div className="food-container">
+            <div className="layout-container food-container">
               <ItemListing />
             </div>
-            <div className="ticket-container">
+            <div className="layout-container ticket-container">
               {sideView === "orders-manage" ? <OrderManage /> : ""}
               {sideView === "order-manage" ? <Order /> : ""}
               {sideView === "cart" ? <Cart /> : ""}
