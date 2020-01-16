@@ -56,3 +56,13 @@ ul {
   list-style: none;
   padding-left: 1rem;
 }
+
+.layout-container {
+  padding: 16px;
+}
+
+.card {
+  box-shadow: 0 4px 12px 0 rgba(32, 33, 37, 0.06);
+  transition: box-shadow 300ms ease-in-out;
+  padding: 8px;
+}
