@@ -8,6 +8,7 @@ export class OrderList extends Component {
       return (
         <OrderCard
           key={index}
+          index={index}
           colNum="col-xl-3 col-md-4 col-xs-6"
           order={order}
         />

@@ -12,6 +12,7 @@ class OrderCard extends Component {
   }
 
   markDone = id => {
+    console.log(id);
     this.setState({ isDone: true });
     socket.emit("mark_order_done", id);
   };
@@ -27,7 +28,6 @@ class OrderCard extends Component {
         <div className="card">
           <div className="card-block">
             <h4 className="card-title">{order.title}</h4>
-            <p></p>
             <p className="card-text">Guests: {order.guests}</p>
             {order.foods.map((food, index) => {
               return (
@@ -41,6 +41,7 @@ class OrderCard extends Component {
               );
             })}
             <SwipeButton
+              index={this.props.index}
               text="Food Ready"
               color="#009de0"
               onSuccess={() => this.markDone(order._id)}

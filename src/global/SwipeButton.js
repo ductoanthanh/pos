@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import styles from "./SwipeButton.scss";
+import "./SwipeButton.scss";
 
-const slider = React.createRef();
+const sliders = [];
 const container = React.createRef();
 const isTouchDevice = "ontouchstart" in document.documentElement;
 
@@ -42,7 +42,8 @@ export default class SwipeButton extends Component {
 
   updateSliderStyle = () => {
     if (this.unmounted || this.state.unlocked) return;
-    slider.current.style.left = this.sliderLeft + 50 + "px";
+    // bug fixes here
+    sliders[this.props.index].style.left = this.sliderLeft + 50 + "px";
   };
 
   stopDrag = () => {
@@ -111,7 +112,7 @@ export default class SwipeButton extends Component {
         >
           <div
             className="swipe-slider"
-            ref={slider}
+            ref={ref => (sliders[this.props.index] = ref)}
             onMouseDown={this.startDrag}
             style={{ background: this.props.color }}
             onTouchStart={this.startDrag}
