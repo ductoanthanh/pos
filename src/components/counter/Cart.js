@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 import { socket } from "../../global/header";
 import { VibamiConsumer } from "../../context/context";
 
@@ -6,7 +7,7 @@ export const Cart = () => {
   return (
     <VibamiConsumer>
       {value => {
-        const { cart, modifyCart } = value;
+        const { cart, modifyCart, setSideView } = value;
 
         const addToKitchen = cart => {
           const lineItems = [];
@@ -19,6 +20,7 @@ export const Cart = () => {
             lineItem["variant"] = id.match(/\w[^-]*$/)[0]; // get everything after -
             lineItem["price"] =
               parseInt(food.basePrice) * parseInt(food.quantity);
+            lineItem["additionalInfo"] = food.additionalInfo;
             lineItems.push(lineItem);
           }
 
@@ -37,11 +39,17 @@ export const Cart = () => {
 
           // empty cart
           modifyCart({});
+
+          // set side view back to all orders
+          setSideView("orders-manage");
         };
 
         return (
           <div>
             <h2 className="h2Class">Cart</h2>
+            <p style={{ display: _.isEmpty(cart) ? "block" : "none" }}>
+              Please select item from the left
+            </p>
             {Object.keys(cart).map(key => (
               <div className="row-container" key={key}>
                 <p>
@@ -53,8 +61,24 @@ export const Cart = () => {
                 <p>${cart[key]["basePrice"] * cart[key]["quantity"]}</p>
               </div>
             ))}
-            <button className="primary-btn" onClick={() => addToKitchen(cart)}>
-              Submit Order
+            <hr />
+            <div className="row-container">
+              {console.log(cart)}
+              <p>Total</p>
+              <p>
+                $
+                {Object.values(cart).reduce(
+                  (accumulator, object) =>
+                    accumulator + object.basePrice * object.quantity,
+                  0
+                )}
+              </p>
+            </div>
+            <button
+              className="primary-btn full-btn"
+              onClick={() => addToKitchen(cart)}
+            >
+              Send orders
             </button>
           </div>
         );

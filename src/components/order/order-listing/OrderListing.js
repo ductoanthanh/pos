@@ -29,8 +29,8 @@ class OrderListing extends Component {
 
   render() {
     return (
-      <div>
-        <h2 className="h2Class">Kitchen Order Area</h2>
+      <div className="layout-container kds-container">
+        <h2 className="h2Class">Kitchen Area</h2>
         <OrderList orders={this.state.orderData} />
       </div>
     );

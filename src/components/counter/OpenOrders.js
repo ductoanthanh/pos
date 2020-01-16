@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { Cart } from "./Cart";
-import { Order } from "./Order";
 import { OrderStatus } from "./OrderStatus";
 import "./OpenOrders.scss";
 import { socket } from "../../global/header";
@@ -49,7 +47,12 @@ export class OpenOrders extends Component {
                 <p className="margin0">
                   No. of orders: <strong>{this.state.orders.length}</strong>
                 </p>
-                <button className="primary-btn">New order</button>
+                <button
+                  className="primary-btn"
+                  onClick={() => setSideView("cart")}
+                >
+                  New order
+                </button>
               </div>
               {/* render all open orders */
               this.state.orders.map((order, index) => {
@@ -88,7 +91,6 @@ export class OpenOrders extends Component {
                   </div>
                 );
               })}
-              <Cart />
             </div>
           );
         }}
