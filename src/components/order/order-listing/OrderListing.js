@@ -1,40 +1,29 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { OrderList } from "./OrderList";
 import { socket } from "../../../global/header";
 
-class OrderListing extends Component {
-  constructor() {
-    super();
-    this.state = {
-      orderData: [] // connect to sockets,
-    };
-  }
+export const OrderListing = () => {
+  const [orders, setOrders] = useState([]);
 
-  getOrdersData = orders => {
-    this.setState({ orderData: orders });
-  };
-
-  changeData = () => socket.emit("get_orders");
-
-  componentDidMount() {
+  useEffect(() => {
     socket.emit("get_orders");
-    socket.on("get_order_data", this.getOrdersData);
-    socket.on("change_data", this.changeData);
-  }
+    socket.on("get_order_data", payload => {
+      setOrders(payload);
+    });
+    socket.on("change_data", payload => {
+      socket.emit("get_orders");
+    });
 
-  componentWillUnmount() {
-    socket.off("get_order_data");
-    socket.off("change_data");
-  }
+    return () => {
+      socket.off("get_order_data");
+      socket.off("change_data");
+    };
+  }, []);
 
-  render() {
-    return (
-      <div className="layout-container kds-container">
-        <h2 className="h2Class">Kitchen Area</h2>
-        <OrderList orders={this.state.orderData} />
-      </div>
-    );
-  }
-}
-
-export default OrderListing;
+  return (
+    <div className="layout-container kds-container">
+      <h2 className="h2Class">Kitchen Area</h2>
+      <OrderList orders={orders} />
+    </div>
+  );
+};

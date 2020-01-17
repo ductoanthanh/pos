@@ -5,7 +5,7 @@ import "./OrderManage.scss";
 export const OrderManage = () => {
   const [isOpenOrdersTab, setOpenOrdersTab] = useState(true);
   return (
-    <div className="order-manage__container">
+    <div className="order-manage">
       <div>
         <div className="tab manage-tab">
           <button

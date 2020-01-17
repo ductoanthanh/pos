@@ -1,0 +1,56 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+ul {
+  list-style: none;
+  padding-left: 1rem;
+}
+
+.layout-container {
+  padding: 16px;
+}
+
+.row-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.margin0 {
+  margin: 0;
+}
+
+.tab {
+  display: flex;
+  margin-bottom: 16px;
+  border-radius: 8px;
+
+  .tablinks {
+    text-align: center;
+  }
+}
+
+.card {
+  box-shadow: 0 4px 12px 0 rgba(32, 33, 37, 0.06);
+  transition: box-shadow 300ms ease-in-out;
+  padding: 8px;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700|Material+Icons");
+@import "./button.scss";
+@import "./variables.scss";

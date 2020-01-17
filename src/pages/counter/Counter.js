@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import ItemListing from "../../components/counter/ItemListing";
-import { OrderManage } from "../../components/counter/OrderManage";
-import { Order } from "../../components/counter/Order";
-import { Cart } from "../../components/counter/Cart";
+import React from "react";
+import { ItemListing } from "../../components/counter/Item/ItemListing";
+import { OrderManage } from "../../components/counter/OrderManage/OrderManage";
+import { Order } from "../../components/counter/OrderManage/Order";
+import { Cart } from "../../components/counter/Cart/Cart";
 import { VibamiConsumer } from "../../context/context";
 import "./Counter.scss";
 
@@ -10,8 +10,7 @@ export const Counter = () => {
   return (
     <VibamiConsumer>
       {value => {
-        const { sideView, setSideView } = value;
-        console.log(sideView);
+        const { sideView } = value;
         return (
           <div className="counter-container">
             <div className="layout-container food-container">
