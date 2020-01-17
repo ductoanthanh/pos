@@ -4,7 +4,7 @@ import { OrderStatus } from "./OrderStatus";
 import { VibamiConsumer } from "../../context/context";
 import "./Order.scss";
 
-export const Order = props => {
+export const Order = () => {
   let foodTaxValue = 0,
     otherTaxValue = 0,
     foodTaxRate = 0.14,
@@ -76,10 +76,22 @@ export const Order = props => {
             </div>
             <button
               style={{ margin: "1em 0" }}
-              className="primary-btn full-btn"
+              className="app-btn primary-btn full-btn"
               disabled={selectedOrder.isPaid}
             >
               Charge customer
+            </button>
+            <button
+              style={{
+                margin: "0",
+                backgroundColor: "#fff",
+                color: "#000",
+                border: "1px solid #000"
+              }}
+              className="app-btn secondary-btn full-btn"
+              onClick={() => setSideView("orders-manage")}
+            >
+              Back to all orders
             </button>
           </div>
         );
