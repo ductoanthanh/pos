@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ItemListing from "../../components/counter/ItemListing";
 import { OrderManage } from "../../components/counter/OrderManage";
 import { Order } from "../../components/counter/Order";
