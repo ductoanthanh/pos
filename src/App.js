@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.scss";
 import { Header } from "./global/header";
 import { Switch, Route } from "react-router-dom";
-import OrderListing from "./components/order/order-listing/OrderListing";
+import { OrderListing } from "./components/order/order-listing/OrderListing";
 import { Counter } from "./pages/counter/Counter";
 
 class App extends Component {

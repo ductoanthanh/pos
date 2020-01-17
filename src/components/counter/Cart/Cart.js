@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
-import { socket } from "../../global/header";
-import { VibamiConsumer } from "../../context/context";
+import { socket } from "../../../global/header";
+import { VibamiConsumer } from "../../../context/context";
 
 export const Cart = () => {
   return (
@@ -75,7 +75,7 @@ export const Cart = () => {
               </p>
             </div>
             <button
-              className="primary-btn full-btn"
+              className="app-btn primary-btn full-btn"
               onClick={() => addToKitchen(cart)}
             >
               Send orders
