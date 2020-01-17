@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import "./ItemModal.scss";
 
 export const ItemModal = props => {
   const { isOpen, toggle, addToCart, food } = props;
