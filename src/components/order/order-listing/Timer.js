@@ -30,10 +30,14 @@ export const Timer = props => {
   const [timeSpent, setTimeSpent] = useState(calculateTimeSpent());
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeOut = setTimeout(() => {
       setTimeSpent(calculateTimeSpent());
       setDivColor();
     }, 1000);
+
+    return () => {
+      clearTimeout(timeOut); // cancel timeOut in useEffect cleanup to avoid memory leak
+    };
   });
 
   const timerComponents = [];
