@@ -10,8 +10,7 @@ export const Counter = () => {
   return (
     <VibamiConsumer>
       {value => {
-        const { sideView, setSideView } = value;
-        console.log(sideView);
+        const { sideView } = value;
         return (
           <div className="counter-container">
             <div className="layout-container food-container">
