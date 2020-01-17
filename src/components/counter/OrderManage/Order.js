@@ -1,7 +1,7 @@
 import React from "react";
-import { isFood } from "../../helpers";
+import { isFood } from "../../../helpers";
 import { OrderStatus } from "./OrderStatus";
-import { VibamiConsumer } from "../../context/context";
+import { VibamiConsumer } from "../../../context/context";
 import "./Order.scss";
 
 export const Order = () => {
@@ -15,7 +15,7 @@ export const Order = () => {
       {value => {
         const { setSideView, selectedOrder } = value;
         return (
-          <div>
+          <div className="order">
             <h5 className="margin0">{selectedOrder.title}</h5>
             <OrderStatus order={selectedOrder} />
             <div>

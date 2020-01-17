@@ -1,8 +1,8 @@
 import React from "react";
-import { ItemListing } from "../../components/counter/ItemListing";
-import { OrderManage } from "../../components/counter/OrderManage";
-import { Order } from "../../components/counter/Order";
-import { Cart } from "../../components/counter/Cart";
+import { ItemListing } from "../../components/counter/Item/ItemListing";
+import { OrderManage } from "../../components/counter/OrderManage/OrderManage";
+import { Order } from "../../components/counter/OrderManage/Order";
+import { Cart } from "../../components/counter/Cart/Cart";
 import { VibamiConsumer } from "../../context/context";
 import "./Counter.scss";
 

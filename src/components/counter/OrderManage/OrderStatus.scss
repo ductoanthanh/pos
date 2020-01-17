@@ -1,0 +1,26 @@
+.order-status {
+  &-list {
+    margin: 8px 0;
+    span {
+      border-radius: 8px;
+      margin-right: 5px;
+      padding: 3px 10px;
+      font-size: 12px;
+    }
+  }
+  &-unpaid {
+    background: #ffc58b;
+  }
+
+  &-ready {
+    background: #bbe5b3;
+  }
+
+  &-in-progress {
+    background: #b4e1fa;
+  }
+
+  &-paid {
+    background: #dfe3e8;
+  }
+}
