@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { OrderStatus } from "./OrderStatus";
 import "./OpenOrders.scss";
-import { socket } from "../../global/header";
-import { isFood } from "../../helpers";
-import { VibamiConsumer } from "../../context/context";
+import { socket } from "../../../global/header";
+import { isFood } from "../../../helpers";
+import { VibamiConsumer } from "../../../context/context";
 
 export const OpenOrders = () => {
   const [orders, setOrders] = useState([]);

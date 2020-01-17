@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { VibamiConsumer } from "../../context/context";
+import { VibamiConsumer } from "../../../context/context";
 import "./ItemCard.scss";
 import { ItemModal } from "./ItemModal";
 

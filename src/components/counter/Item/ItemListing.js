@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { ItemList } from "./ItemList";
-import { socket } from "../../global/header";
+import { ItemCard } from "./ItemCard";
+import { socket } from "../../../global/header";
 import "./ItemListing.scss";
 
 export const ItemListing = () => {
@@ -57,11 +57,19 @@ export const ItemListing = () => {
           );
         })}
       </div>
-      <ItemList
-        foods={foodData.filter(
-          item => item.category === category // render item within certain category
-        )}
-      />
+
+      {/* display items */}
+      <div className="row">
+        {foodData
+          .filter(
+            item => item.category === category // render item within certain category
+          )
+          .map((item, index) => {
+            return (
+              <ItemCard key={index} colNum="col-md-4 col-xs-6" food={item} />
+            );
+          })}
+      </div>
     </div>
   );
 };
