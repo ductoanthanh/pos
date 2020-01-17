@@ -1,10 +1,12 @@
+@import "../../style/variables.scss";
+
 .time-tab {
   .tablinks {
     width: 25%;
 
     &.active {
       border: 0;
-      border-bottom: 3px solid #009de0;
+      border-bottom: 3px solid $primary-color;
       background-color: transparent;
     }
   }
