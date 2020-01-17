@@ -1,80 +1,67 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { ItemList } from "./ItemList";
 import { socket } from "../../global/header";
 import "./ItemListing.scss";
 
-class ItemListing extends Component {
-  constructor() {
-    super();
-    this.state = {
-      foodData: [], // connect to sockets,
-      time: "lunch",
-      category: "appertizer"
-    };
-  }
+export const ItemListing = () => {
+  const [foodData, setFoodData] = useState([]);
+  const [time, setTime] = useState("lunch");
+  const [category, setCategory] = useState("appertizer");
+  const availableTimes = ["Lunch", "Dinner", "Weekends"];
+  const itemCategories = ["Appertizer", "Main", "Drinks", "Desserts"];
 
-  getFoodsData = foods => {
-    this.setState({ foodData: foods });
-  };
-
-  changeData = () => socket.emit("get_foods");
-
-  componentDidMount() {
+  useEffect(() => {
     socket.emit("get_foods");
-    socket.on("get_food_data", this.getFoodsData);
-    socket.on("change_data", this.changeData);
-  }
+    socket.on("get_food_data", payload => {
+      setFoodData(payload);
+    });
+    socket.on("change_data", () => {
+      socket.emit("get_foods");
+    });
 
-  componentWillUnmount() {
-    socket.off("get_food_data");
-    socket.off("change_data");
-  }
+    return () => {
+      socket.off("get_food_data");
+      socket.off("change_data");
+    };
+  }, []);
 
-  render() {
-    const availableTimes = ["Lunch", "Dinner", "Weekends"];
-    const itemCategories = ["Appertizer", "Main", "Drinks", "Desserts"];
-    return (
-      <div>
-        <div className="tab time-tab">
-          {availableTimes.map(time => {
-            return (
-              <button
-                key={time}
-                className={`tablinks ${
-                  this.state.time === time.toLowerCase() ? "active" : ""
-                }`}
-                onClick={() => this.setState({ time: time.toLowerCase() })}
-              >
-                {time}
-              </button>
-            );
-          })}
-        </div>
-        <div className="tab category-tab">
-          {itemCategories.map(category => {
-            return (
-              <button
-                key={category}
-                className={`tablinks ${
-                  this.state.category === category.toLowerCase() ? "active" : ""
-                }`}
-                onClick={() =>
-                  this.setState({ category: category.toLowerCase() })
-                }
-              >
-                {category}
-              </button>
-            );
-          })}
-        </div>
-        <ItemList
-          foods={this.state.foodData.filter(
-            item => item.category === this.state.category // render item within certain category
-          )}
-        />
+  return (
+    <div>
+      <div className="tab time-tab">
+        {availableTimes.map(timeWindow => {
+          return (
+            <button
+              key={timeWindow}
+              className={`tablinks ${
+                time === timeWindow.toLowerCase() ? "active" : ""
+              }`}
+              onClick={() => setTime(timeWindow.toLowerCase())}
+            >
+              {timeWindow}
+            </button>
+          );
+        })}
       </div>
-    );
-  }
-}
-
-export default ItemListing;
+      <div className="tab category-tab">
+        {itemCategories.map(category => {
+          return (
+            <button
+              key={category}
+              className={`tablinks ${
+                category === category.toLowerCase() ? "active" : ""
+              }`}
+              onClick={() => setCategory(category.toLowerCase())}
+            >
+              {category}
+            </button>
+          );
+        })}
+      </div>
+      <ItemList
+        foods={foodData.filter(
+          item => item.category === category // render item within certain category
+        )}
+      />
+    </div>
+  );
+};
