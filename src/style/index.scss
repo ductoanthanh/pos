@@ -26,6 +26,11 @@ ul {
   padding: 16px;
 }
 
+.row-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .margin0 {
   margin: 0;
 }
