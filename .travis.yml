@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t toanthanh/react-test -f ./client/Dockerfile ./client
+
+script:
+  - docker run toanthanh/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t toanthanh/pos-client ./client
+  - docker build -t toanthanh/pos-nginx ./nginx
+  - docker build -t toanthanh/pos-backend ./backend
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push toanthanh/pos-client
+  - docker push toanthanh/pos-nginx
+  - docker push toanthanh/pos-backend
