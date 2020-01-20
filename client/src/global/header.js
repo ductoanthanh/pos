@@ -17,6 +17,7 @@ class Header extends Component {
   }
 
   render() {
+    console.log("hiiiiiiiiii");
     return (
       <header>
         <nav>
