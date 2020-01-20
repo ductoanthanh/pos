@@ -125,6 +125,6 @@ app.use("/api/v1/foods", foodRoutes);
 app.use("/api/v1/orders", orderRoutes);
 app.use("/api/v1/variants", variantRoutes);
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 5000;
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
