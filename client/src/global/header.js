@@ -10,7 +10,7 @@ class Header extends Component {
   constructor() {
     super();
     this.state = {
-      endpoint: `${window.location.hostname}:5000` // Update 5000 with port on which backend is running.
+      endpoint: `${window.location.hostname}` // Update 5000 with port on which backend is running.
     };
 
     socket = socketIOClient(this.state.endpoint);
