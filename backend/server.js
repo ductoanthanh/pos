@@ -8,7 +8,9 @@ const orderRoutes = require("./routes/orders");
 const variantRoutes = require("./routes/variants");
 require("dotenv").config();
 
-const db = require("monk")(process.env.DB_URL);
+const keys = require("./keys");
+
+const db = require("monk")(keys.DB_URL);
 
 const Order = require("./models/order");
 const Food = require("./models/food");
@@ -111,7 +113,7 @@ io.on("connection", socket => {
 
 // connect database for endpoints
 mongoose
-  .connect(process.env.DB_URL, {
+  .connect(keys.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -125,6 +127,6 @@ app.use("/api/v1/foods", foodRoutes);
 app.use("/api/v1/orders", orderRoutes);
 app.use("/api/v1/variants", variantRoutes);
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 5000;
 
 server.listen(port, () => console.log(`Listening on port ${port}`));

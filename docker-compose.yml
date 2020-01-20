@@ -1,0 +1,29 @@
+version: "2"
+services:
+  api:
+    build:
+      context: ./backend/
+    command: npm run dev
+    volumes:
+      - ./backend/:/usr/app
+      - /usr/app/node_modules
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+  client:
+    build:
+      context: ./client/
+    command: npm start
+    volumes:
+      - ./client/:/usr/app
+    ports:
+      - "3000:3000"
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - "3050:80"

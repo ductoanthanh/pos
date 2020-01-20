@@ -1,15 +1,15 @@
 {
-  "name": "POS",
+  "name": "pos-ui",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "bootstrap": "^4.4.1",
+    "jquery": "^3.4.1",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-hook-form": "^4.5.5",
-    "react-html-table-to-excel": "^2.0.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^3.3.0",
     "reactstrap": "^6.5.0",
@@ -19,8 +19,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "devDependencies": {
+    "sass": "^1.23.7"
   },
   "browserslist": [
     ">0.2%",
