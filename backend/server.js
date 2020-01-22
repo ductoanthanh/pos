@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 // our server instance
 const server = http.createServer(app);
-const io = socketIO(server); // instances of io
+const io = socketIO(server).of("/api"); // instances of io
 
 io.on("connection", socket => {
   console.log("New client connected" + socket.id);
@@ -31,7 +31,7 @@ io.on("connection", socket => {
   // Returning the initial data of food menu from FoodItems collection
   socket.on("initial_data", () => {
     collection_foodItems.find({}).then(docs => {
-      io.sockets.emit("get_data", docs);
+      io.emit("get_data", docs);
     });
   });
 
@@ -44,7 +44,7 @@ io.on("connection", socket => {
       )
       .then(updatedDoc => {
         // Socket event to update the Predicted quantity across the Kitchen
-        io.sockets.emit("change_data");
+        io.emit("change_data");
       });
   });
 
@@ -54,7 +54,7 @@ io.on("connection", socket => {
       .populate("foods.itemInfo")
       .populate("foods.variant")
       .then(docs => {
-        io.sockets.emit("get_order_data", docs);
+        io.emit("get_order_data", docs);
       });
   });
 
@@ -63,7 +63,7 @@ io.on("connection", socket => {
     Food.find()
       .populate("variants")
       .then(docs => {
-        io.sockets.emit("get_food_data", docs);
+        io.emit("get_food_data", docs);
       });
   });
 
@@ -91,7 +91,7 @@ io.on("connection", socket => {
           });
       });
 
-      io.sockets.emit("change_data");
+      io.emit("change_data");
     });
   });
 
@@ -101,7 +101,7 @@ io.on("connection", socket => {
       .update({ _id: id }, { $set: { isDone: true } })
       .then(updatedDoc => {
         // Updating the different Kitchen area with the current Status.
-        io.sockets.emit("change_order_data");
+        io.emit("change_order_data");
       });
   });
 
