@@ -126,6 +126,9 @@ mongoose
 app.use("/api/v1/foods", foodRoutes);
 app.use("/api/v1/orders", orderRoutes);
 app.use("/api/v1/variants", variantRoutes);
+app.get("/api/", (req, res, next) => {
+  res.send("Hi from backend");
+});
 
 const port = process.env.PORT || 5000;
 
