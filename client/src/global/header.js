@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import socketIOClient from "socket.io-client";
 import "./header.scss";
 
-const socket = socketIOClient("/api");
+const socket = socketIOClient();
 
 const Header = () => {
   return (

@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 // our server instance
 const server = http.createServer(app);
-const io = socketIO(server).of("/api"); // instances of io
+const io = socketIO(server); // instances of io
 
 io.on("connection", socket => {
   console.log("New client connected" + socket.id);
@@ -126,8 +126,13 @@ mongoose
 app.use("/api/v1/foods", foodRoutes);
 app.use("/api/v1/orders", orderRoutes);
 app.use("/api/v1/variants", variantRoutes);
+
 app.get("/api/", (req, res, next) => {
-  res.send("Hi from backend");
+  res.send("Hi from api backend");
+});
+
+app.get("/", (req, res) => {
+  res.send("Hi from backend!");
 });
 
 const port = process.env.PORT || 5000;
