@@ -9,7 +9,6 @@ export const ItemModal = props => {
   const [fillings, setFillings] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const onSubmit = data => {
-    console.log(data);
     addToCart(food, data);
     setQuantity(1); // reset quantity to 1
     toggle(); // if submit successfully then close modal
