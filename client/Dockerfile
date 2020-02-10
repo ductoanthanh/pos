@@ -1,13 +1,15 @@
-FROM node:10
+FROM node:12.10.0-alpine
 
-WORKDIR /usr/app
+WORKDIR /usr/client
 
 COPY package.json ./
 
-RUN npm i
+RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
+
+EXPOSE 3000
