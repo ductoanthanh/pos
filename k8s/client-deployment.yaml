@@ -2,19 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: client-deployment
+  labels:
+    app: client
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
-      component: web
+      app: client
   template:
     metadata:
       labels:
-        component: web
+        app: client
     spec:
       containers:
         - name: client
           image: toanthanh/pos-client:latest
-          imagePullPolicy: Always
           ports:
             - containerPort: 3000
+          env:
+            - name: DB_URL
+              value: mongodb://test:QwertyuioP1@ds361488.mlab.com:61488/pos
