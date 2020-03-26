@@ -8,11 +8,16 @@ import { VibamiConsumer } from "../../../context/context";
 export const OpenOrders = () => {
   const [orders, setOrders] = useState([]);
 
+  const getOrders = () => {
+    axios
+      .get("http://localhost:5000/api/v1/orders?location=counter")
+      .then(response => setOrders(response.data));
+  };
+
   useEffect(() => {
+    getOrders();
     setInterval(async () => {
-      axios
-        .get("http://localhost:5000/api/v1/orders?location=counter")
-        .then(response => setOrders(response.data));
+      getOrders();
     }, 3000);
   }, []);
 

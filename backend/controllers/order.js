@@ -14,7 +14,7 @@ exports.createOrder = (req, res) => {
     }
 
     foods.forEach(food => {
-      Food.findById(food._id)
+      Food.findById(food.itemInfo)
         .populate("orders")
         .exec((err, foundFood) => {
           if (err) {
