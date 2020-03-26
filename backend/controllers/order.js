@@ -31,3 +31,27 @@ exports.createOrder = (req, res) => {
     return res.json(newOrder);
   });
 };
+
+exports.markOrderDone = (req, res) => {
+  const orderID = req.params.id;
+
+  Order.findById(orderID).exec((err, doc) => {
+    if (err) {
+      return res.status(422).send({ errors: normalizeErrors(err.errors) });
+    }
+
+    doc.isDone = true;
+    doc.save();
+
+    return res.json(doc);
+  });
+};
+
+exports.getOrders = (req, res) => {
+  Order.find({ isDone: false })
+    .populate("foods.itemInfo")
+    .populate("foods.variant")
+    .then(docs => {
+      res.json(docs);
+    });
+};
