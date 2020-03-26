@@ -1,6 +1,6 @@
 FROM node:12.10.0-alpine
 
-WORKDIR /usr/app
+WORKDIR "/app"
 
 COPY package.json ./
 
@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
