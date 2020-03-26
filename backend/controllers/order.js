@@ -48,7 +48,13 @@ exports.markOrderDone = (req, res) => {
 };
 
 exports.getOrders = (req, res) => {
-  Order.find({ isDone: false })
+  const { location } = req.query;
+  const queryParam = {
+    kitchen: { isDone: false },
+    counter: { isPaid: false }
+  };
+
+  Order.find(queryParam[location])
     .populate("foods.itemInfo")
     .populate("foods.variant")
     .then(docs => {

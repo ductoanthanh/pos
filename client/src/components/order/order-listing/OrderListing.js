@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { OrderList } from "./OrderList";
-import { socket } from "../../../global/header";
 import axios from "axios";
 
 export const OrderListing = () => {
@@ -9,7 +8,7 @@ export const OrderListing = () => {
   useEffect(() => {
     setInterval(async () => {
       axios
-        .get("http://localhost:5000/api/v1/orders")
+        .get("http://localhost:5000/api/v1/orders?location=kitchen")
         .then(response => setOrders(response.data));
     }, 5000);
   }, []);

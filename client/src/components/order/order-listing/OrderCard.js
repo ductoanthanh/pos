@@ -17,7 +17,7 @@ export const OrderCard = props => {
       );
       setTimeout(() => {
         setIsDone(true);
-      }, 1000);
+      }, 3000);
       console.log(response);
     } catch (e) {
       console.log(e);
