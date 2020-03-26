@@ -1,9 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import socketIOClient from "socket.io-client";
 import "./header.scss";
-
-const socket = socketIOClient();
 
 const Header = () => {
   return (
@@ -24,4 +21,4 @@ const Header = () => {
   );
 };
 
-export { Header, socket };
+export { Header };
