@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { OrderStatus } from "./OrderStatus";
 import "./OpenOrders.scss";
-import { socket } from "../../../global/header";
+import axios from "axios";
 import { isFood } from "../../../helpers";
 import { VibamiConsumer } from "../../../context/context";
 
@@ -9,18 +9,11 @@ export const OpenOrders = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    socket.emit("get_orders");
-    socket.on("get_order_data", payload => {
-      setOrders(payload);
-    });
-    socket.on("change_data", payload => {
-      socket.emit("get_orders");
-    });
-
-    return () => {
-      socket.off("get_order_data");
-      socket.off("change_data");
-    };
+    setInterval(async () => {
+      axios
+        .get("http://localhost:5000/api/v1/orders?location=counter")
+        .then(response => setOrders(response.data));
+    }, 3000);
   }, []);
 
   return (
