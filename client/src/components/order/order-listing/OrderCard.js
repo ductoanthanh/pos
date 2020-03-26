@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { socket } from "../../../global/header";
+import axios from "axios";
 import { Timer } from "./Timer";
 import SwipeButton from "../../../global/SwipeButton";
 
@@ -7,11 +7,21 @@ export const OrderCard = props => {
   const { order, colNum, index } = props;
   const [isDone, setIsDone] = useState(false);
 
-  const markDone = id => {
-    setTimeout(() => {
-      setIsDone(true);
-    }, 1000);
-    socket.emit("mark_order_done", id);
+  const markDone = async id => {
+    try {
+      const response = await axios.patch(
+        `http://localhost:5000/api/v1/orders/${id}`,
+        {
+          isDone: true
+        }
+      );
+      setTimeout(() => {
+        setIsDone(true);
+      }, 1000);
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

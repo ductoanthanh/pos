@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { OrderList } from "./OrderList";
 import { socket } from "../../../global/header";
+import axios from "axios";
 
 export const OrderListing = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    socket.emit("get_orders");
-    socket.on("get_order_data", payload => {
-      setOrders(payload);
-    });
-    socket.on("change_data", payload => {
-      socket.emit("get_orders");
-    });
-
-    return () => {
-      socket.off("get_order_data");
-      socket.off("change_data");
-    };
+    setInterval(async () => {
+      axios
+        .get("http://localhost:5000/api/v1/orders")
+        .then(response => setOrders(response.data));
+    }, 5000);
   }, []);
 
   return (
