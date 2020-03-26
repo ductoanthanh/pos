@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ItemCard } from "./ItemCard";
-import { socket } from "../../../global/header";
+import axios from "axios";
 import "./ItemListing.scss";
 
 export const ItemListing = () => {
@@ -11,18 +11,9 @@ export const ItemListing = () => {
   const itemCategories = ["Appertizer", "Main", "Drinks", "Desserts"];
 
   useEffect(() => {
-    socket.emit("get_foods");
-    socket.on("get_food_data", payload => {
-      setFoodData(payload);
-    });
-    socket.on("change_data", () => {
-      socket.emit("get_foods");
-    });
-
-    return () => {
-      socket.off("get_food_data");
-      socket.off("change_data");
-    };
+    axios
+      .get("http://localhost:5000/api/v1/foods")
+      .then(response => setFoodData(response.data));
   }, []);
 
   return (

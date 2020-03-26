@@ -1,8 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const FoodCtl = require('../controllers/food');
+const FoodCtl = require("../controllers/food");
 
-router.post('', FoodCtl.createFoodItem);
+router.get("/", FoodCtl.getFoods);
+router.post("/", FoodCtl.createFoodItem);
 
 module.exports = router;
