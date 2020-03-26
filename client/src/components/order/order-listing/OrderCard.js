@@ -9,12 +9,9 @@ export const OrderCard = props => {
 
   const markDone = async id => {
     try {
-      const response = await axios.patch(
-        `http://localhost:5000/api/v1/orders/${id}`,
-        {
-          isDone: true
-        }
-      );
+      const response = await axios.patch(`/api/v1/orders/${id}`, {
+        isDone: true
+      });
       setTimeout(() => {
         setIsDone(true);
       }, 3000);

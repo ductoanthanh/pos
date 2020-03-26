@@ -35,7 +35,7 @@ export const Cart = () => {
           };
 
           // submit order to kitchen
-          axios.post(`http://localhost:5000/api/v1/orders/`, request);
+          axios.post(`/api/v1/orders/`, request);
 
           // empty cart
           modifyCart({});

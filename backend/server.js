@@ -11,8 +11,6 @@ require("dotenv").config();
 
 const keys = require("./keys");
 
-const db = require("monk")(keys.DB_URL);
-
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
@@ -32,11 +30,11 @@ mongoose
     }
   });
 
-app.use("/api/v1/foods", foodRoutes);
-app.use("/api/v1/orders", orderRoutes);
-app.use("/api/v1/variants", variantRoutes);
+app.use("/v1/foods", foodRoutes);
+app.use("/v1/orders", orderRoutes);
+app.use("/v1/variants", variantRoutes);
 
-app.get("/api/", (req, res, next) => {
+app.get("/", (req, res, next) => {
   res.send("Hi from api backend");
 });
 

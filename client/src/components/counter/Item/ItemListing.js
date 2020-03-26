@@ -11,9 +11,7 @@ export const ItemListing = () => {
   const itemCategories = ["Appertizer", "Main", "Drinks", "Desserts"];
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/v1/foods")
-      .then(response => setFoodData(response.data));
+    axios.get("/api/v1/foods").then(response => setFoodData(response.data));
   }, []);
 
   return (

@@ -10,7 +10,7 @@ export const OpenOrders = () => {
 
   const getOrders = () => {
     axios
-      .get("http://localhost:5000/api/v1/orders?location=counter")
+      .get("/api/v1/orders?location=counter")
       .then(response => setOrders(response.data));
   };
 
