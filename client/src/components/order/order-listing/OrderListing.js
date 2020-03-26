@@ -7,7 +7,7 @@ export const OrderListing = () => {
 
   const getOrders = () => {
     axios
-      .get("http://localhost:5000/api/v1/orders?location=kitchen")
+      .get("/api/v1/orders?location=kitchen")
       .then(response => setOrders(response.data));
   };
 
