@@ -3,6 +3,8 @@ const http = require("http");
 const socketIO = require("socket.io");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+let cors = require("cors");
+
 const foodRoutes = require("./routes/foods");
 const orderRoutes = require("./routes/orders");
 const variantRoutes = require("./routes/variants");
@@ -20,6 +22,7 @@ const collection_orders = db.get("orders"); // collection on MongoDB
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 // our server instance
 const server = http.createServer(app);
