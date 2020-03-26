@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-import { socket } from "../../../global/header";
+import axios from "axios";
 import { VibamiConsumer } from "../../../context/context";
 
 export const Cart = () => {
@@ -35,7 +35,7 @@ export const Cart = () => {
           };
 
           // submit order to kitchen
-          socket.emit("add_order", request);
+          axios.post(`http://localhost:5000/api/v1/orders/`, request);
 
           // empty cart
           modifyCart({});

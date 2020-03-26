@@ -5,11 +5,16 @@ import axios from "axios";
 export const OrderListing = () => {
   const [orders, setOrders] = useState([]);
 
+  const getOrders = () => {
+    axios
+      .get("http://localhost:5000/api/v1/orders?location=kitchen")
+      .then(response => setOrders(response.data));
+  };
+
   useEffect(() => {
+    getOrders();
     setInterval(async () => {
-      axios
-        .get("http://localhost:5000/api/v1/orders?location=kitchen")
-        .then(response => setOrders(response.data));
+      getOrders();
     }, 5000);
   }, []);
 
