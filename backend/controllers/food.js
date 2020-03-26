@@ -1,17 +1,24 @@
-const Food = require('../models/food');
-const { normalizeErrors } = require('../helpers/mongoose');
+const Food = require("../models/food");
+const { normalizeErrors } = require("../helpers/mongoose");
 
 exports.createFoodItem = (req, res) => {
-	const { name, category, description, price } = req.body;
+  const { name, category, description, price } = req.body;
 
-	const food = new Food({name, category, description, price});
+  const food = new Food({ name, category, description, price });
 
-	Food.create(food, (err, newFood) => {
-		if (err) {
-			return res.status(422).send({errors: normalizeErrors(err.errors)});
-		}
+  Food.create(food, (err, newFood) => {
+    if (err) {
+      return res.status(422).send({ errors: normalizeErrors(err.errors) });
+    }
 
-		return res.json(newFood);
-	});
+    return res.json(newFood);
+  });
+};
 
-}
+exports.getFoods = (req, res) => {
+  Food.find()
+    .populate("variants")
+    .then(docs => {
+      res.json(docs);
+    });
+};
