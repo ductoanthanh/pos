@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: toanthanh/pos-backend:v1
+          image: toanthanh/pos-backend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 5000

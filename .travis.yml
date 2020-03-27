@@ -14,7 +14,7 @@ before_install:
   - gcloud config set project pos-project-272409
   - gcloud config set compute/zone europe-north1-a
   - gcloud container clusters get-credentials pos-cluster
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker build -t toanthanh/react-test -f ./client/Dockerfile.dev ./client
 
 script:
