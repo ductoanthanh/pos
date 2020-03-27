@@ -15,11 +15,13 @@ before_install:
   - gcloud config set compute/zone europe-north1-a
   - gcloud container clusters get-credentials pos-cluster
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker build -t toanthanh/react-test -f ./client/Dockerfile.dev ./client
 script:
-  - docker run toanthanh/react-test npm test -- --coverage
-deploy:
-  provider: script
-  script: bash scripts/deploy.sh
-  on:
-    branch: master
+  - docker build -t toanthanh/pos-client:latest -t toanthanh/pos-client:$SHA -f ./client/Dockerfile ./client
+  - docker build -t toanthanh/pos-backend:latest -t toanthanh/pos-backend:$SHA -f ./backend/Dockerfile ./backend
+  - docker push toanthanh/pos-client:latest
+  - docker push toanthanh/pos-backend:latest
+  - docker push toanthanh/pos-client:$SHA
+  - docker push toanthanh/pos-backend:$SHA
+  - kubectl apply -f k8s
+  - kubectl set image deployments/server-deployment server=toanthanh/pos-backend:$SHA
+  - kubectl set image deployments/client-deployment client=toanthanh/pos-client:$SHA
