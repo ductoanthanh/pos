@@ -16,12 +16,10 @@ before_install:
   - gcloud container clusters get-credentials pos-cluster
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker build -t toanthanh/react-test -f ./client/Dockerfile.dev ./client
-
 script:
   - docker run toanthanh/react-test npm test -- --coverage
-
 deploy:
   provider: script
-  script: bash ./deploy.sh
+  script: bash scripts/deploy.sh
   on:
     branch: master
