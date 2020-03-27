@@ -1,20 +1,27 @@
 sudo: required
 services:
   - docker
-
+env:
+  global:
+    - SHA=$(git rev-parse HEAD)
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
-  - docker build -t toanthanh/react-test -f ./client/Dockerfile ./client
+  - openssl aes-256-cbc -K $encrypted_9f3b5599b056_key -iv $encrypted_9f3b5599b056_iv -in service-account.json.enc -out service-account.json -d
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud components update kubectl
+  - gcloud auth activate-service-account --key-file service-account.json
+  - gcloud config set project pos-project-272409
+  - gcloud config set compute/zone europe-north1-a
+  - gcloud container clusters get-credentials pos-cluster
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t toanthanh/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run toanthanh/react-test npm test -- --coverage
 
-after_success:
-  - docker build -t toanthanh/pos-client ./client
-  - docker build -t toanthanh/pos-nginx ./nginx
-  - docker build -t toanthanh/pos-backend ./backend
-  # Log in to the docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # Take those images and push them to docker hub
-  - docker push toanthanh/pos-client
-  - docker push toanthanh/pos-nginx
-  - docker push toanthanh/pos-backend
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
