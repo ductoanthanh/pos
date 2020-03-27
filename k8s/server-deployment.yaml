@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: server-deployment
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       component: server
@@ -14,12 +14,13 @@ spec:
     spec:
       containers:
         - name: server
-          image: toanthanh/pos-backend
+          image: toanthanh/pos-backend:v1
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
           env:
             - name: DB_URL
               valueFrom:
                 secretKeyRef:
-                  name: db_url
-                  key: DB_URL
+                  name: db-url
+                  key: DB-URL
