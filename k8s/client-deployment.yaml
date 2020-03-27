@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: toanthanh/pos-client:v5
+          image: toanthanh/pos-client:latest
           ports:
             - containerPort: 3000
           imagePullPolicy: Always
